@@ -3,7 +3,7 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv_newely_opened_items"
+    android:id="@+id/cv_newly_opened_items"
     app:cardElevation="4dp"
     android:layout_margin="12dp">
 
@@ -12,10 +12,10 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_newely_opened"
+            android:id="@+id/tv_newly_opened"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/newely_opened"
+            android:text="@string/newly_opened"
             android:paddingTop="20dp"
             android:layout_marginLeft="12dp"
             android:textColor="@color/primary"
@@ -25,8 +25,8 @@
             android:id="@+id/iv_sushi"
             android:layout_width="40dp"
             android:layout_height="30dp"
-            android:layout_below="@id/tv_newely_opened"
             android:src="@drawable/img_dummy_sushi"
+            android:layout_below="@id/tv_newly_opened"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="8dp"
             />
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sushi_kimura"
-            android:layout_below="@id/tv_newely_opened"
+            android:layout_below="@id/tv_newly_opened"
             android:layout_toRightOf="@id/iv_sushi"
             android:layout_marginTop="8dp"
             android:padding="8dp"
@@ -85,11 +85,10 @@
             android:textSize="12sp"/>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:id="@+id/v_newly_opened_divider"
             android:layout_below="@id/tv_misato"
-            android:background="@color/divider"
             android:layout_marginTop="8dp"
+            style="@style/Divider"
             />
 
         <TextView
@@ -97,11 +96,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="EXPLORE"
-            android:layout_below="@id/iv_misato"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="12dp"
-            android:paddingTop="8dp"/>
+            android:layout_below="@id/v_newly_opened_divider"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="12dp" />
+
+
 
 
 

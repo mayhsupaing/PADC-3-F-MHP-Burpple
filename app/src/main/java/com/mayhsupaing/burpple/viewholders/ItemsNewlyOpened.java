@@ -7,8 +7,8 @@ import android.view.View;
  * Created by Lenovo on 1/4/2018.
  */
 
-public class ItemsNewAndTrending extends RecyclerView.ViewHolder {
-    public ItemsNewAndTrending(View itemView) {
+public class ItemsNewlyOpened extends RecyclerView.ViewHolder {
+    public ItemsNewlyOpened(View itemView) {
         super(itemView);
     }
 }

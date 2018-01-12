@@ -1,40 +1,35 @@
 package com.mayhsupaing.burpple.activities;
 
-import android.app.SearchManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuInflater;
-import android.view.View;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mayhsupaing.burpple.MBurppleApp;
 import com.mayhsupaing.burpple.R;
 import com.mayhsupaing.burpple.adapters.FoodGuidesAdapter;
 import com.mayhsupaing.burpple.adapters.FoodPromotionsAdapter;
 import com.mayhsupaing.burpple.adapters.ImagesInFoodAdapter;
-import com.mayhsupaing.burpple.adapters.NewAndTrendingAdapter;
+import com.mayhsupaing.burpple.adapters.NewlyOpenedAdapter;
+import com.mayhsupaing.burpple.adapters.TrendingVenuesAdapter;
+import com.mayhsupaing.burpple.data.vo.model.FeaturedModel;
+import com.mayhsupaing.burpple.data.vo.model.PromotionModel;
+import com.mayhsupaing.burpple.events.LoadFeaturedEvent;
+import com.mayhsupaing.burpple.events.LoadPromotionEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @BindView(R.id.sv_search_food_place)
-    SearchView svSearchPlace;
-
-   /* @BindView(R.id.toolbar_promotion)
-    Toolbar toolbarPromotion;*/
 
     @BindView(R.id.vp_backdrop_image)
     ViewPager vpBackDropImage;
@@ -45,54 +40,68 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rv_food_guides)
     RecyclerView rvFoodGuides;
 
-    @BindView(R.id.rv_new_and_trending)
-    RecyclerView rvNewAndTrending;
+    @BindView(R.id.rv_newly_opened)
+    RecyclerView rvNewlyOpened;
+
+    @BindView(R.id.rv_trending_venues)
+    RecyclerView rvTrendingVenues;
 
     private ImagesInFoodAdapter mImagesInFoodAdapter;
-    private FoodPromotionsAdapter foodPromotionsAdapter;
-    private FoodGuidesAdapter foodGuidesAdapter;
-    private NewAndTrendingAdapter newAndTrendingAdapter;
+    private FoodPromotionsAdapter mFoodPromotionsAdapter;
+    private FoodGuidesAdapter mFoodGuidesAdapter;
+    private NewlyOpenedAdapter mNewlyOpenedAdapter;
+    private TrendingVenuesAdapter mTrendingVenuesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this,this);
-
-        setSupportActionBar(toolbar);
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        svSearchPlace.setQueryHint("Search eg. Japanese in Orchard");
-        svSearchPlace.setIconified(true);
+        ButterKnife.bind(this, this);
 
 
-       /* setSupportActionBar(toolbarPromotion);
-        ActionBar actionBarPromotion=getSupportActionBar();
-        actionBarPromotion.setDisplayShowTitleEnabled(false);
-*/
-
-        mImagesInFoodAdapter=new ImagesInFoodAdapter();
+        mImagesInFoodAdapter = new ImagesInFoodAdapter();
         vpBackDropImage.setAdapter(mImagesInFoodAdapter);
 
-        foodPromotionsAdapter=new FoodPromotionsAdapter();
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext()
-                ,LinearLayoutManager.HORIZONTAL,false);
+        mFoodPromotionsAdapter = new FoodPromotionsAdapter();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext()
+                , LinearLayoutManager.HORIZONTAL, false);
         rvFoodPromotions.setLayoutManager(linearLayoutManager);
-        rvFoodPromotions.setAdapter(foodPromotionsAdapter);
+        rvFoodPromotions.setAdapter(mFoodPromotionsAdapter);
 
-        foodGuidesAdapter=new FoodGuidesAdapter();
-        LinearLayoutManager foodGuidelinearLayoutManager=new LinearLayoutManager(getApplicationContext(),
-                LinearLayoutManager.HORIZONTAL,false);
+        mFoodGuidesAdapter = new FoodGuidesAdapter();
+        LinearLayoutManager foodGuidelinearLayoutManager = new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.HORIZONTAL, false);
         rvFoodGuides.setLayoutManager(foodGuidelinearLayoutManager);
-        rvFoodGuides.setAdapter(foodGuidesAdapter);
+        rvFoodGuides.setAdapter(mFoodGuidesAdapter);
 
-        newAndTrendingAdapter=new NewAndTrendingAdapter();
-        LinearLayoutManager newAndTrendinglinearLayoutManager=new LinearLayoutManager(getApplicationContext(),
-                LinearLayoutManager.HORIZONTAL,false);
-        rvNewAndTrending.setLayoutManager(newAndTrendinglinearLayoutManager);
-        rvNewAndTrending.setAdapter(newAndTrendingAdapter);
+        mNewlyOpenedAdapter = new NewlyOpenedAdapter();
+        LinearLayoutManager newlyOpenedLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rvNewlyOpened.setLayoutManager(newlyOpenedLinearLayoutManager);
+        rvNewlyOpened.setAdapter(mNewlyOpenedAdapter);
 
+        mTrendingVenuesAdapter = new TrendingVenuesAdapter();
+        LinearLayoutManager trendingVenuesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rvTrendingVenues.setLayoutManager(trendingVenuesLinearLayoutManager);
+        rvTrendingVenues.setAdapter(mTrendingVenuesAdapter);
+
+        FeaturedModel.getsObjInstance().loadFeatured();
+        PromotionModel.getsObjInstance().LoadPromotion();
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -108,10 +117,25 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.sv_search_food_place) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onFeaturedLoaded(LoadFeaturedEvent event){
+        Log.d(MBurppleApp.LOG_TAG,"FeaturedLoaded"+event.getFeaturedList().size());
+        mImagesInFoodAdapter.setFeatured(event.getFeaturedList());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPromotionLoaded(LoadPromotionEvent event){
+        Log.d(MBurppleApp.LOG_TAG,"mmPromotionLoaded"+event.getPromotionList().size());
+        mFoodPromotionsAdapter.setPromotion(event.getPromotionList());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGuideLoaded(LoadPromotionEvent event){
+        Log.d(MBurppleApp.LOG_TAG,"mmGuideLoaded"+event.getPromotionList().size());
+        mFoodGuidesAdapter.setGuide(event.getPromotionList());
     }
 }

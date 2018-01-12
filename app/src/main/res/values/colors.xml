@@ -13,5 +13,8 @@
     <color name="burpple_exclusive">#FFEB3B</color>
     <color name="white_text">#FFF</color>
     <color name="full_black">#000</color>
+    <color name="rectangle_corner_background">#388E3C</color>
+    <color name="rectangle_corner_stroke">#8BC34A</color>
+    <color name="overlay_transparency">#66000000</color>
 </resources>
 

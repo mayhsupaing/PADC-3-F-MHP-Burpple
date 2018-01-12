@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp">
+    android:background="@color/full_black">
 
     <ImageView
-        android:id="@+id/iv_food_guides"
+        android:id="@+id/iv_food_guide"
         android:layout_width="150dp"
         android:layout_height="200dp"
-        android:src="@drawable/img_dummy_burpple_guide"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_dummy_promotion_food"
+        android:alpha="0.5" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_guide_promotion_title"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="20% Off Total Bill"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white_text" />
+
+    <TextView
+        android:id="@+id/tv_guide_shop_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/promotion_shop"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_guide_promotion_title"
+        android:textColor="@color/white_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_guide_shop_name"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="IndoChilli(Savourwo... "
+        android:layout_below="@id/tv_guide_shop_area"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white_text"/>
+
+
+</RelativeLayout>

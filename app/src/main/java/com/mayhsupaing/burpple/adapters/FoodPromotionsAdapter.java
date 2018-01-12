@@ -8,29 +8,46 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mayhsupaing.burpple.R;
+import com.mayhsupaing.burpple.data.vo.PromotionVO;
 import com.mayhsupaing.burpple.viewholders.ItemsFoodPromotion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lenovo on 1/4/2018.
  */
 
-public class FoodPromotionsAdapter extends RecyclerView.Adapter {
+public class FoodPromotionsAdapter extends RecyclerView.Adapter<ItemsFoodPromotion> {
+
+    private List<PromotionVO> mPromotionList;
+
+    public FoodPromotionsAdapter() {
+        mPromotionList = new ArrayList<>();
+    }
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context=parent.getContext();
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View foodItemsView=inflater.inflate(R.layout.item_food_promotion,parent,false);
-        ItemsFoodPromotion itemsFoodPromotion=new ItemsFoodPromotion(foodItemsView);
+    public ItemsFoodPromotion onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View foodItemsView = inflater.inflate(R.layout.item_food_promotion, parent, false);
+        ItemsFoodPromotion itemsFoodPromotion = new ItemsFoodPromotion(foodItemsView);
         return itemsFoodPromotion;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ItemsFoodPromotion holder, int position) {
+        holder.setPromotion(mPromotionList.get(position));
     }
+
 
     @Override
     public int getItemCount() {
-        return 7;
+        return mPromotionList.size();
+    }
+
+    public void setPromotion(List<PromotionVO> promotionList) {
+        mPromotionList = promotionList;
+        notifyDataSetChanged();
     }
 }

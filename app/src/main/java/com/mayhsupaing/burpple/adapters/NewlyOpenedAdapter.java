@@ -7,22 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mayhsupaing.burpple.R;
-import com.mayhsupaing.burpple.viewholders.ItemsNewAndTrending;
-
-import java.util.zip.Inflater;
+import com.mayhsupaing.burpple.viewholders.ItemsNewlyOpened;
 
 /**
  * Created by Lenovo on 1/4/2018.
  */
 
-public class NewAndTrendingAdapter extends RecyclerView.Adapter {
+public class NewlyOpenedAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context=parent.getContext();
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View newAndTrending=inflater.inflate(R.layout.item_new_and_trending,parent,false);
-        ItemsNewAndTrending itemsNewAndTrending=new ItemsNewAndTrending(newAndTrending);
-        return itemsNewAndTrending;
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View newlyOpened = inflater.inflate(R.layout.item_newly_opened, parent, false);
+        ItemsNewlyOpened itemsNewlyOpened = new ItemsNewlyOpened(newlyOpened);
+        return itemsNewlyOpened;
     }
 
     @Override
@@ -32,6 +30,6 @@ public class NewAndTrendingAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 1;
     }
 }

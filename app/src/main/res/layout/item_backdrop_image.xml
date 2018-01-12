@@ -7,8 +7,46 @@
         android:id="@+id/iv_food_backdrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/img_dummy_bupple_highlight"
+        android:src="@drawable/img_dummy_burpple_highlight"
         android:scaleType="fitXY"
+        android:alpha="0.5"
+        android:background="@color/full_black"
         />
+
+    <TextView
+        android:id="@+id/tv_highlight_features"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FEATURES"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:textColor="@color/white_text"
+        android:background="@drawable/square_corner_highlight_features"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/tv_highlight_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A Tasty Walk In A Park"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
+        android:textColor="@color/white_text"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_highlight_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sub_title_highlight"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:textColor="@color/white_text"
+        android:textSize="10sp"/>
+
 
 </com.mayhsupaing.burpple.viewitems.ImageInFoodViewItems>
