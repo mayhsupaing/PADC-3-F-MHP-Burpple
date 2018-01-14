@@ -21,7 +21,17 @@ import butterknife.ButterKnife;
 
 public class ImageInFoodViewItems extends FrameLayout {
 
+    @BindView(R.id.iv_food_backdrop)
+    ImageView ivFoodBackdrop;
 
+    @BindView(R.id.tv_highlight_features)
+    TextView tvHighlightFeatures;
+
+    @BindView(R.id.tv_highlight_title)
+    TextView tvHighlightTitle;
+
+    @BindView(R.id.tv_highlight_sub_title)
+    TextView tvHighlightSubDescription;
 
     public ImageInFoodViewItems(@NonNull Context context) {
         super(context);
@@ -36,4 +46,19 @@ public class ImageInFoodViewItems extends FrameLayout {
     }
 
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        ButterKnife.bind(this,this);
+    }
+
+    public void setData(FeaturedVO featured){
+        Glide.with(ivFoodBackdrop.getContext())
+                .load(featured.getFeatureImage())
+                .into(ivFoodBackdrop);
+
+        tvHighlightFeatures.setText(featured.getFeatureTag());
+        tvHighlightSubDescription.setText(featured.getFeatureDescription());
+        tvHighlightTitle.setText(featured.getFeatureTitle());
+    }
 }

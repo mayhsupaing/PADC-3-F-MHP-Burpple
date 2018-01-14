@@ -1,5 +1,6 @@
 package com.mayhsupaing.burpple.data.vo.model;
 
+import com.mayhsupaing.burpple.network.GuideDataAgent;
 import com.mayhsupaing.burpple.network.GuideOKHttpDataAgent;
 import com.mayhsupaing.burpple.network.GuideRetrofitDataAgent;
 import com.mayhsupaing.burpple.network.PromotionDataAgent;
@@ -11,14 +12,14 @@ import com.mayhsupaing.burpple.network.PromotionRetrofitDataAgent;
 
 public class GuideModel {
 
-    private PromotionDataAgent sPromotionDataAgent;
+    private GuideDataAgent sGuideDataAgent;
 
     private static GuideModel sObjInstance;
 
     private GuideModel(){
 
-        //sPromotionDataAgent= GuideOKHttpDataAgent.getsObjInstance();
-        sPromotionDataAgent= GuideRetrofitDataAgent.getsObjInstance();
+        //sGuideDataAgent= GuideOKHttpDataAgent.getsObjInstance();
+        sGuideDataAgent= GuideRetrofitDataAgent.getsObjInstance();
     }
 
     public static GuideModel getsObjInstance(){
@@ -29,7 +30,7 @@ public class GuideModel {
         return sObjInstance;
     }
 
-    public void LoadPromotion(){
-        sPromotionDataAgent.loadPromotion();
+    public void LoadGuide(){
+        sGuideDataAgent.loadGuide();
     }
 }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mayhsupaing.burpple.R;
+import com.mayhsupaing.burpple.data.vo.GuideVO;
 import com.mayhsupaing.burpple.data.vo.PromotionVO;
 
 import butterknife.BindView;
@@ -21,28 +22,20 @@ public class ItemsFoodGuides extends RecyclerView.ViewHolder {
     @BindView(R.id.iv_food_guide)
     ImageView ivFoodGuide;
 
-    @BindView(R.id.tv_guide_promotion_title)
-    TextView tvGuidePromotionTitle;
-
-    @BindView(R.id.tv_guide_shop_name)
-    TextView tvGuideShopName;
-
-    @BindView(R.id.tv_guide_shop_area)
-    TextView tvGuideShopArea;
+    @BindView(R.id.tv_guide_title)
+    TextView tvGuideTitle;
 
     public ItemsFoodGuides(View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
     }
 
-    public void setGuide(PromotionVO guide)
+    public void setGuide(GuideVO guide)
     {
-        tvGuidePromotionTitle.setText(guide.getPromotionTitle());
-        tvGuideShopName.setText(guide.getPromotionShop().getPromotionShopName());
-        tvGuideShopArea.setText(guide.getPromotionShop().getPromotionShopArea());
+        tvGuideTitle.setText(guide.getGuideTitle());
 
         Glide.with(ivFoodGuide.getContext())
-                .load(guide.getPromotionImage())
+                .load(guide.getGuideImage())
                 .into(ivFoodGuide);
     }
 }

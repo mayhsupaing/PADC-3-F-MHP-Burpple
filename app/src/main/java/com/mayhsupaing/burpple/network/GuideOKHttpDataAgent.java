@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.mayhsupaing.burpple.MBurppleApp;
+import com.mayhsupaing.burpple.events.LoadGuideEvent;
 import com.mayhsupaing.burpple.events.LoadPromotionEvent;
+import com.mayhsupaing.burpple.network.response.GetGuideResponse;
 import com.mayhsupaing.burpple.network.response.GetPromotionResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,7 +25,7 @@ import okhttp3.Response;
  * Created by Lenovo on 1/12/2018.
  */
 
-public class GuideOKHttpDataAgent implements PromotionDataAgent {
+public class GuideOKHttpDataAgent implements GuideDataAgent{
 
     private static GuideOKHttpDataAgent sObjInstance;
 
@@ -39,8 +41,8 @@ public class GuideOKHttpDataAgent implements PromotionDataAgent {
         return sObjInstance;
     }
     @Override
-    public void loadPromotion() {
-        new LoadGuideTask().execute("http://padcmyanmar.com/padc-3/burpple-food-places/apis/v1/getPromotions.php");
+    public void loadGuide() {
+        new LoadGuideTask().execute("http://padcmyanmar.com/padc-3/burpple-food-places/apis/v1/getGuides.php");
     }
 
     private static class LoadGuideTask extends AsyncTask<String,Void,String>{
@@ -84,9 +86,9 @@ public class GuideOKHttpDataAgent implements PromotionDataAgent {
             super.onPostExecute(response);
 
             Gson gson = new Gson();
-            GetPromotionResponse getPromotionResponse = gson.fromJson(response, GetPromotionResponse.class);
+            GetGuideResponse getGuideResponse = gson.fromJson(response, GetGuideResponse.class);
 
-            LoadPromotionEvent event = new LoadPromotionEvent(getPromotionResponse.getPromotions());
+            LoadGuideEvent event = new LoadGuideEvent(getGuideResponse.getFeatured());
             EventBus eventBus = EventBus.getDefault();
             eventBus.post(event);
         }

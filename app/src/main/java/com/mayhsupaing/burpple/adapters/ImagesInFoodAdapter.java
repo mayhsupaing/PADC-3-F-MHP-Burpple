@@ -28,17 +28,6 @@ import butterknife.ButterKnife;
 
 public class ImagesInFoodAdapter extends PagerAdapter{
 
-    @BindView(R.id.iv_food_backdrop)
-    ImageView ivFoodBackdrop;
-
-    @BindView(R.id.tv_highlight_features)
-    TextView tvHighlightFeatures;
-
-    @BindView(R.id.tv_highlight_title)
-    TextView tvHighlightTitle;
-
-    @BindView(R.id.tv_highlight_sub_title)
-    TextView tvHighlightSubDescription;
 
     private List<FeaturedVO> mFeaturedList;
 
@@ -61,15 +50,18 @@ public class ImagesInFoodAdapter extends PagerAdapter{
         Context context = container.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         ImageInFoodViewItems view = (ImageInFoodViewItems) layoutInflater.inflate(R.layout.item_backdrop_image, container, false);
-        ButterKnife.bind(this,view);
+       // ButterKnife.bind(this,view);
 
-        tvHighlightFeatures.setText(mFeaturedList.get(position).getFeatureTag());
+       /* tvHighlightFeatures.setText(mFeaturedList.get(position).getFeatureTag());
         tvHighlightSubDescription.setText(mFeaturedList.get(position).getFeatureDescription());
         tvHighlightTitle.setText(mFeaturedList.get(position).getFeatureTitle());
 
         Glide.with(ivFoodBackdrop.getContext())
                 .load(mFeaturedList.get(position).getFeatureImage())
-                .into(ivFoodBackdrop);
+                .into(ivFoodBackdrop);*/
+
+        view.setData(mFeaturedList.get(position));
+
         container.addView(view);
         return view;
     }

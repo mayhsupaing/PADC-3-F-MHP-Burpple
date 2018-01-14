@@ -30,6 +30,6 @@ public class TrendingVenuesAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 5;
     }
 }

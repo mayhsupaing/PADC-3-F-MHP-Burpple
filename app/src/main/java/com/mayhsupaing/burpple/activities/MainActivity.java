@@ -17,8 +17,10 @@ import com.mayhsupaing.burpple.adapters.ImagesInFoodAdapter;
 import com.mayhsupaing.burpple.adapters.NewlyOpenedAdapter;
 import com.mayhsupaing.burpple.adapters.TrendingVenuesAdapter;
 import com.mayhsupaing.burpple.data.vo.model.FeaturedModel;
+import com.mayhsupaing.burpple.data.vo.model.GuideModel;
 import com.mayhsupaing.burpple.data.vo.model.PromotionModel;
 import com.mayhsupaing.burpple.events.LoadFeaturedEvent;
+import com.mayhsupaing.burpple.events.LoadGuideEvent;
 import com.mayhsupaing.burpple.events.LoadPromotionEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,18 +78,19 @@ public class MainActivity extends AppCompatActivity {
 
         mNewlyOpenedAdapter = new NewlyOpenedAdapter();
         LinearLayoutManager newlyOpenedLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager.VERTICAL, false);
         rvNewlyOpened.setLayoutManager(newlyOpenedLinearLayoutManager);
         rvNewlyOpened.setAdapter(mNewlyOpenedAdapter);
 
         mTrendingVenuesAdapter = new TrendingVenuesAdapter();
         LinearLayoutManager trendingVenuesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager.VERTICAL, false);
         rvTrendingVenues.setLayoutManager(trendingVenuesLinearLayoutManager);
         rvTrendingVenues.setAdapter(mTrendingVenuesAdapter);
 
         FeaturedModel.getsObjInstance().loadFeatured();
         PromotionModel.getsObjInstance().LoadPromotion();
+        GuideModel.getsObjInstance().LoadGuide();
 
 
     }
@@ -134,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGuideLoaded(LoadPromotionEvent event){
-        Log.d(MBurppleApp.LOG_TAG,"mmGuideLoaded"+event.getPromotionList().size());
-        mFoodGuidesAdapter.setGuide(event.getPromotionList());
+    public void onGuideLoaded(LoadGuideEvent event){
+        Log.d(MBurppleApp.LOG_TAG,"mmGuideLoaded"+event.getGuideList().size());
+        mFoodGuidesAdapter.setGuide(event.getGuideList());
     }
 }

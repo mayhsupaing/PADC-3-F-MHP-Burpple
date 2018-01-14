@@ -30,6 +30,7 @@ public class NewlyOpenedAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 5;
     }
+
 }

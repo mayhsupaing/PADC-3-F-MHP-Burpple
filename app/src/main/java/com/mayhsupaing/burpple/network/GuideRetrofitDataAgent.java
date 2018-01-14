@@ -1,7 +1,9 @@
 package com.mayhsupaing.burpple.network;
 
 import com.google.gson.Gson;
+import com.mayhsupaing.burpple.events.LoadGuideEvent;
 import com.mayhsupaing.burpple.events.LoadPromotionEvent;
+import com.mayhsupaing.burpple.network.response.GetGuideResponse;
 import com.mayhsupaing.burpple.network.response.GetPromotionResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,11 +21,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Lenovo on 1/12/2018.
  */
 
-public class GuideRetrofitDataAgent implements PromotionDataAgent {
+public class GuideRetrofitDataAgent implements GuideDataAgent {
 
     private static GuideRetrofitDataAgent sObjInstance;
 
-    private PromotionApi promotionApi;
+    private GuideApi guideApi;
 
     private GuideRetrofitDataAgent(){
 
@@ -39,7 +41,7 @@ public class GuideRetrofitDataAgent implements PromotionDataAgent {
                 .client(httpClient)
                 .build();
 
-        promotionApi=retrofit.create(PromotionApi.class);
+        guideApi=retrofit.create(GuideApi.class);
     }
 
     public static GuideRetrofitDataAgent getsObjInstance(){
@@ -50,25 +52,27 @@ public class GuideRetrofitDataAgent implements PromotionDataAgent {
         return sObjInstance;
     }
     @Override
-    public void loadPromotion() {
+    public void loadGuide() {
 
-        Call<GetPromotionResponse> getPromotionResponseCall=promotionApi.getPromotions(1,"b002c7e1a528b7cb460933fc2875e916");
+        Call<GetGuideResponse> getGuideResponseCall=guideApi.getGuide(1,"b002c7e1a528b7cb460933fc2875e916");
 
-        getPromotionResponseCall.enqueue(new Callback<GetPromotionResponse>() {
+        getGuideResponseCall.enqueue(new Callback<GetGuideResponse>() {
             @Override
-            public void onResponse(Call<GetPromotionResponse> call, Response<GetPromotionResponse> response) {
-                GetPromotionResponse getPromotionResponse=response.body();
-                if(getPromotionResponse!=null) {
-                    LoadPromotionEvent event = new LoadPromotionEvent(getPromotionResponse.getPromotions());
+            public void onResponse(Call<GetGuideResponse> call, Response<GetGuideResponse> response) {
+                GetGuideResponse getGuideResponse=response.body();
+                if(getGuideResponse!=null) {
+                    LoadGuideEvent event = new LoadGuideEvent(getGuideResponse.getFeatured());
                     EventBus.getDefault().post(event);
                 }
             }
 
             @Override
-            public void onFailure(Call<GetPromotionResponse> call, Throwable t) {
+            public void onFailure(Call<GetGuideResponse> call, Throwable t) {
 
             }
 
+
         });
     }
+
 }

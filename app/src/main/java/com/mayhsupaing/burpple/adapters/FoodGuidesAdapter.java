@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mayhsupaing.burpple.R;
+import com.mayhsupaing.burpple.data.vo.GuideVO;
 import com.mayhsupaing.burpple.data.vo.PromotionVO;
 import com.mayhsupaing.burpple.viewholders.ItemsFoodGuides;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class FoodGuidesAdapter extends RecyclerView.Adapter<ItemsFoodGuides>{
 
-    private List<PromotionVO> mGuideList;
+    private List<GuideVO> mGuideList;
 
     public FoodGuidesAdapter() {
         mGuideList= new ArrayList<>();
@@ -45,7 +46,7 @@ public class FoodGuidesAdapter extends RecyclerView.Adapter<ItemsFoodGuides>{
         return mGuideList.size();
     }
 
-    public void setGuide(List<PromotionVO> guideList) {
+    public void setGuide(List<GuideVO> guideList) {
         mGuideList = guideList;
         notifyDataSetChanged();
     }
