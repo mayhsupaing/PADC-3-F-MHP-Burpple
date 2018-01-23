@@ -43,6 +43,16 @@ public class FeaturedOKHttpDataAgent implements FeaturedDataAgent {
         new LoadFeaturedTask().execute("http://padcmyanmar.com/padc-3/burpple-food-places/apis/v1/getFeatured.php");
     }
 
+    @Override
+    public void loginUser(String phoneNo, String password) {
+
+    }
+
+    @Override
+    public void registerUser(String name, String password, String phoneNo) {
+
+    }
+
     private static class LoadFeaturedTask extends AsyncTask<String,Void,String>{
 
         @Override

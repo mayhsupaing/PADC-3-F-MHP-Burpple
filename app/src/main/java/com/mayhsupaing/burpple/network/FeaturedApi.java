@@ -1,7 +1,8 @@
 package com.mayhsupaing.burpple.network;
 
 import com.mayhsupaing.burpple.network.response.GetFeaturedResponse;
-import com.mayhsupaing.burpple.network.response.GetPromotionResponse;
+import com.mayhsupaing.burpple.network.response.GetLogInResponse;
+import com.mayhsupaing.burpple.network.response.GetRegisterResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -18,4 +19,15 @@ public interface FeaturedApi {
     @POST("getFeatured.php")
     Call<GetFeaturedResponse> getFeatured(@Field("page") int page,
                                                    @Field("access_token") String accessToken);
+
+    @FormUrlEncoded
+    @POST("login.php")
+    Call<GetLogInResponse> loginUser(@Field("phoneNo") String phoneNo,
+                                     @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("register.php")
+    Call<GetRegisterResponse> registerUser(@Field("phoneNo") String phoneNo,
+                                          @Field("password") String password,
+                                          @Field("name") String name);
 }

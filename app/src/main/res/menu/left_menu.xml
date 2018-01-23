@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_chinese_food"
+        android:title="Chinese Food"
+        android:icon="@drawable/ic_restaurant_black_24dp"/>
+
+    <item
+        android:id="@+id/menu_korean_food"
+        android:title="Korean Food"
+        android:icon="@drawable/ic_restaurant_black_24dp"/>
+
+    <item
+        android:id="@+id/menu_indian_food"
+        android:title="Indian Food"
+        android:icon="@drawable/ic_restaurant_black_24dp"/>
+
+    <item
+        android:id="@+id/menu_western_food"
+        android:title="Western Food"
+        android:icon="@drawable/ic_restaurant_black_24dp"/>
+
+    <item
+        android:id="@+id/menu_european_food"
+        android:title="European Food"
+        android:icon="@drawable/ic_restaurant_black_24dp"/>
+
+</menu>

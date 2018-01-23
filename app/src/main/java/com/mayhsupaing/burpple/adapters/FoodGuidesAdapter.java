@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.mayhsupaing.burpple.R;
 import com.mayhsupaing.burpple.data.vo.GuideVO;
-import com.mayhsupaing.burpple.data.vo.PromotionVO;
 import com.mayhsupaing.burpple.viewholders.ItemsFoodGuides;
 
 import java.util.ArrayList;

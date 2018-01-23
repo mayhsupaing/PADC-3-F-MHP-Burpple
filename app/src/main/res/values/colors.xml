@@ -16,5 +16,7 @@
     <color name="rectangle_corner_background">#388E3C</color>
     <color name="rectangle_corner_stroke">#8BC34A</color>
     <color name="overlay_transparency">#66000000</color>
+    <color name="white_full">#FFF</color>
+    <color name="form_background">#303F9F</color>
 </resources>
 

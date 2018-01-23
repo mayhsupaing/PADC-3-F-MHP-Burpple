@@ -10,4 +10,13 @@ public interface FeaturedDataAgent {
      * load feature from API.
      */
     void loadFeatured();
+
+    /**
+     * Login user;
+     * @param phoneNo
+     * @param password
+     */
+    void loginUser(String phoneNo,String password);
+
+    void registerUser(String name,String password,String phoneNo);
 }

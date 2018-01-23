@@ -2,9 +2,13 @@ package com.mayhsupaing.burpple.network;
 
 import com.google.gson.Gson;
 import com.mayhsupaing.burpple.events.LoadFeaturedEvent;
-import com.mayhsupaing.burpple.events.LoadPromotionEvent;
+
+import com.mayhsupaing.burpple.events.SuccessLoginEvent;
+import com.mayhsupaing.burpple.events.SuccessRegisterEvent;
 import com.mayhsupaing.burpple.network.response.GetFeaturedResponse;
-import com.mayhsupaing.burpple.network.response.GetPromotionResponse;
+import com.mayhsupaing.burpple.network.response.GetLogInResponse;
+import com.mayhsupaing.burpple.network.response.GetRegisterResponse;
+
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -70,6 +74,46 @@ public class FeaturedRetrofitDataAgent implements FeaturedDataAgent {
 
             }
 
+        });
+    }
+
+    @Override
+    public void loginUser(String phoneNo, String password) {
+        Call<GetLogInResponse> getLogInResponseCall=featuredApi.loginUser(phoneNo,password);
+        getLogInResponseCall.enqueue(new Callback<GetLogInResponse>() {
+            @Override
+            public void onResponse(Call<GetLogInResponse> call, Response<GetLogInResponse> response) {
+                GetLogInResponse getLogInResponse=response.body();
+                if(getLogInResponse!=null) {
+                    SuccessLoginEvent event = new SuccessLoginEvent(getLogInResponse.getLoginUser());
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetLogInResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void registerUser(String name, String password, String phoneNo) {
+        Call<GetRegisterResponse> getRegisterResponseCall = featuredApi.registerUser(name, password, phoneNo);
+        getRegisterResponseCall.enqueue(new Callback<GetRegisterResponse>() {
+            @Override
+            public void onResponse(Call<GetRegisterResponse> call, Response<GetRegisterResponse> response) {
+                GetRegisterResponse getRegisterResponse=response.body();
+                if(getRegisterResponse!=null) {
+                    SuccessRegisterEvent event = new SuccessRegisterEvent(getRegisterResponse.getRegisterUser());
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetRegisterResponse> call, Throwable t) {
+
+            }
         });
     }
 }

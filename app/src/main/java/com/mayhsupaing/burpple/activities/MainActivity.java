@@ -1,10 +1,17 @@
 package com.mayhsupaing.burpple.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,10 +25,18 @@ import com.mayhsupaing.burpple.adapters.NewlyOpenedAdapter;
 import com.mayhsupaing.burpple.adapters.TrendingVenuesAdapter;
 import com.mayhsupaing.burpple.data.vo.model.FeaturedModel;
 import com.mayhsupaing.burpple.data.vo.model.GuideModel;
+import com.mayhsupaing.burpple.data.vo.model.LogInUserModel;
 import com.mayhsupaing.burpple.data.vo.model.PromotionModel;
+import com.mayhsupaing.burpple.data.vo.model.RegisterUserModel;
+import com.mayhsupaing.burpple.delegates.BeforeLoginDelegate;
+import com.mayhsupaing.burpple.delegates.LogInUserDelegate;
+import com.mayhsupaing.burpple.delegates.RegisterUserDelegate;
 import com.mayhsupaing.burpple.events.LoadFeaturedEvent;
 import com.mayhsupaing.burpple.events.LoadGuideEvent;
 import com.mayhsupaing.burpple.events.LoadPromotionEvent;
+import com.mayhsupaing.burpple.viewpods.AccountControlViewPod;
+import com.mayhsupaing.burpple.viewpods.LogInUserViewPod;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,8 +45,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BeforeLoginDelegate,LogInUserDelegate,RegisterUserDelegate {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.vp_backdrop_image)
     ViewPager vpBackDropImage;
@@ -48,17 +65,38 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rv_trending_venues)
     RecyclerView rvTrendingVenues;
 
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
     private ImagesInFoodAdapter mImagesInFoodAdapter;
     private FoodPromotionsAdapter mFoodPromotionsAdapter;
     private FoodGuidesAdapter mFoodGuidesAdapter;
     private NewlyOpenedAdapter mNewlyOpenedAdapter;
     private TrendingVenuesAdapter mTrendingVenuesAdapter;
 
+    /*private BeforeLogInUserViewPod vpBeforeLoginUser;*/
+   /* private LogInUserViewPod vpLogInUser;*/
+
+    private AccountControlViewPod vpAccountControl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this, this);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.title_toolbar);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         mImagesInFoodAdapter = new ImagesInFoodAdapter();
@@ -92,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
         PromotionModel.getsObjInstance().LoadPromotion();
         GuideModel.getsObjInstance().LoadGuide();
 
+        /*vpBeforeLoginUser= (BeforeLogInUserViewPod) navigationView.getHeaderView(0);
+        vpBeforeLoginUser.setDelegate(this);
+*/
+
+       /* vpLogInUser= (LogInUserViewPod) navigationView.getHeaderView(0);
+        vpLogInUser.setDelegate(this);*/
+       vpAccountControl= (AccountControlViewPod) navigationView.getHeaderView(0);
+       vpAccountControl.setDelegate((BeforeLoginDelegate) this);
+       vpAccountControl.setDelegate((LogInUserDelegate) this);
+       vpAccountControl.setDelegate((RegisterUserDelegate) this);
+     /*  vpAccountControl.setDelegate((BeforeLoginDelegate) this);
+       vpAccountControl.setDelegate((LogInUserDelegate) this);
+       vpAccountControl.setDelegate((RegisterUserDelegate) this);*/
 
     }
 
@@ -119,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if(id==android.R.id.home){
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+
         //noinspection SimplifiableIfStatement
 
         return super.onOptionsItemSelected(item);
@@ -140,5 +195,28 @@ public class MainActivity extends AppCompatActivity {
     public void onGuideLoaded(LoadGuideEvent event){
         Log.d(MBurppleApp.LOG_TAG,"mmGuideLoaded"+event.getGuideList().size());
         mFoodGuidesAdapter.setGuide(event.getGuideList());
+    }
+
+    @Override
+    public void onTapToLogin() {
+        Intent intent=AccountControlActivity.newIntentLogIn(getApplicationContext());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTapToRegister() {
+        Intent intent=AccountControlActivity.newIntentRegister(getApplicationContext());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTapLogOut()
+    {
+        LogInUserModel.getsObjInstance().logOut();
+    }
+
+    @Override
+    public void onTapRegisterLogOut() {
+        RegisterUserModel.getsObjInstance().logOut();
     }
 }

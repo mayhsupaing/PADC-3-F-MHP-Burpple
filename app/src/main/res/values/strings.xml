@@ -24,4 +24,16 @@
 
     <string name="search_view_hint">Japanese restuant</string>
 
+    <string name="title_toolbar">Burpple</string>
+    <string name="lbl_to_login" >Log In</string>
+    <string name="lbl_to_signUp">Sign Up</string>
+
+    <string name="lbl_login_form">Login form</string>
+    <string name="btn_forgot_password">Forgot Password?</string>
+    <string name="btn_remember_me">Remember me</string>
+    <string name="btn_to_login">Login</string>
+    <string name="btn_create_a_new_account">Create a New Account</string>
+    <string name="lbl_agree_terms_condition">I agree to Terms and Privacy Policy</string>
+    <string name="lbl_log_out">Log Out</string>
+
 </resources>

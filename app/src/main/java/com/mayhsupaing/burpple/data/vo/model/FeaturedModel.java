@@ -30,4 +30,6 @@ public class FeaturedModel {
     public void loadFeatured(){
         mFeaturedDataAgent.loadFeatured();
     }
+
+
 }
