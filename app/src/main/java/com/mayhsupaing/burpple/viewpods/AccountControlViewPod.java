@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 
 import com.mayhsupaing.burpple.R;
 import com.mayhsupaing.burpple.data.vo.model.LogInUserModel;
+import com.mayhsupaing.burpple.data.vo.model.RegisterUserModel;
 import com.mayhsupaing.burpple.delegates.BeforeLoginDelegate;
 import com.mayhsupaing.burpple.delegates.LogInUserDelegate;
 import com.mayhsupaing.burpple.delegates.RegisterUserDelegate;
@@ -57,7 +58,7 @@ public class AccountControlViewPod extends FrameLayout {
         ButterKnife.bind(this,this);
 
         refreshUserSession();
-        refreshRegisterUserSession();
+
 
         EventBus.getDefault().register(this);
     }
@@ -83,9 +84,16 @@ public class AccountControlViewPod extends FrameLayout {
         if (LogInUserModel.getsObjInstance().isUserLogIn()) {
             vpBeforeLogin.setVisibility(View.GONE);
             vpLoginUser.setVisibility(View.VISIBLE);
-        } else {
+            vpRegisterUser.setVisibility(View.GONE);
+        } else if(RegisterUserModel.getsObjInstance().isUserRegister()){
+            vpBeforeLogin.setVisibility(View.GONE);
+            vpLoginUser.setVisibility(View.GONE);
+            vpRegisterUser.setVisibility(View.VISIBLE);
+        }
+        else {
             vpBeforeLogin.setVisibility(View.VISIBLE);
             vpLoginUser.setVisibility(View.GONE);
+            vpRegisterUser.setVisibility(View.GONE);
         }
     }
 
@@ -107,15 +115,6 @@ public class AccountControlViewPod extends FrameLayout {
      * Register
      */
 
-    public void refreshRegisterUserSession() {
-        if (LogInUserModel.getsObjInstance().isUserLogIn()) {
-            vpBeforeLogin.setVisibility(View.GONE);
-            vpRegisterUser.setVisibility(View.VISIBLE);
-        } else {
-            vpBeforeLogin.setVisibility(View.VISIBLE);
-            vpRegisterUser.setVisibility(View.GONE);
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegisterUserSuccess(SuccessRegisterEvent event) {

@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="@color/form_background">
+        android:background="@color/form_background"
+        android:fitsSystemWindows="true">
 
         <TextView
             android:id="@+id/btn_sign_up_form"
